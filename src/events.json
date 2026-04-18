@@ -105,5 +105,45 @@
         "confidence": 1.0
       }
     ]
+  },
+  {
+    "school_name": null,
+    "email_subject": "Going to a circus",
+    "events": [
+      {
+        "title": "Going to circus",
+        "event_type": "trip",
+        "date": "12 September 2026",
+        "start_time": null,
+        "end_time": null,
+        "location": null,
+        "child_specific": false,
+        "action_required": true,
+        "deadline": null,
+        "items_needed": null,
+        "cost": null,
+        "confidence": 0.9
+      }
+    ]
+  },
+  {
+    "school_name": null,
+    "email_subject": "Farm Trip",
+    "events": [
+      {
+        "title": "School Farm Trip",
+        "event_type": "trip",
+        "date": "10 May 2026",
+        "start_time": null,
+        "end_time": null,
+        "location": "AB Farm",
+        "child_specific": true,
+        "action_required": false,
+        "deadline": null,
+        "items_needed": null,
+        "cost": null,
+        "confidence": 0.9
+      }
+    ]
   }
 ]

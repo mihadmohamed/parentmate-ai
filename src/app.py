@@ -1,18 +1,15 @@
 from __future__ import annotations
-from unittest import result
 
 import streamlit as st
 
-from extractor import ExtractionError, extract_email
-from schemas import EmailExtraction
-from storage import load_events, save_event
-
-
-st.set_page_config(
-    page_title="School Email Event Extractor",
-    page_icon="📚",
-    layout="wide",
-)
+try:
+    from .extractor import ExtractionError, extract_email
+    from .schemas import EmailExtraction
+    from .storage import load_events, save_event
+except ImportError:
+    from extractor import ExtractionError, extract_email
+    from schemas import EmailExtraction
+    from storage import load_events, save_event
 
 
 def build_summary(result: EmailExtraction) -> str:
@@ -54,7 +51,26 @@ def render_event(event_index: int, event: dict) -> None:
             st.write("**Items needed:**", ", ".join(items_needed) if items_needed else "None stated")
 
 
+def render_saved_events() -> None:
+    st.markdown("### All extracted events")
+
+    events = load_events()
+
+    if not events:
+        st.info("No stored events yet.")
+    else:
+        for i, e in enumerate(events, start=1):
+            with st.expander(f"Saved email {i}"):
+                st.json(e)
+
+
 def main() -> None:
+    st.set_page_config(
+        page_title="School Email Event Extractor",
+        page_icon="📚",
+        layout="wide",
+    )
+
     st.title("School Email Event Extractor")
     st.write("Paste a school email to extract events, deadlines, and parent actions.")
 
@@ -64,10 +80,12 @@ def main() -> None:
         submitted = st.form_submit_button("Extract events", use_container_width=True)
 
     if not submitted:
+        render_saved_events()
         return
 
     if not email_body.strip():
         st.warning("Enter the email body before extracting.")
+        render_saved_events()
         return
 
     with st.spinner("Extracting events..."):
@@ -95,18 +113,8 @@ def main() -> None:
     with st.expander("View JSON"):
         st.json(result.model_dump(mode="json"), expanded=True)
 
+    render_saved_events()
+
 
 if __name__ == "__main__":
     main()
-
-# --- NEW SECTION ---
-st.markdown("### All extracted events")
-
-events = load_events()
-
-if not events:
-    st.info("No stored events yet.")
-else:
-    for i, e in enumerate(events, start=1):
-        with st.expander(f"Saved email {i}"):
-            st.json(e)

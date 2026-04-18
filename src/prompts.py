@@ -2,7 +2,10 @@ from __future__ import annotations
 
 import json
 
-from schemas import EmailExtraction
+try:
+    from .schemas import EmailExtraction
+except ImportError:
+    from schemas import EmailExtraction
 
 
 EXTRACTION_SYSTEM_PROMPT = """
@@ -16,9 +19,11 @@ Use null for any unknown scalar value.
 Use null for items_needed when the email does not mention any items.
 Extract every distinct event, reminder, deadline, payment, permission slip, volunteer request, or parent action mentioned in the email.
 If the email contains no events or actions, return an empty events array.
+If the email subject is empty, set email_subject to null.
 Keep date and time strings exactly as stated when possible.
 Set child_specific to true only when the email clearly targets a specific child, class, grade, team, or group.
 Set action_required to true only when the email clearly asks for a parent or student action.
+Set action_required to false when the email describes an event but does not ask for an action.
 Confidence must be a number between 0 and 1.
 """.strip()
 
@@ -35,5 +40,5 @@ EMAIL SUBJECT:
 {email_subject.strip() or "(empty subject)"}
 
 EMAIL BODY:
-{email_body.strip()}v 
+{email_body.strip()}
 """.strip()

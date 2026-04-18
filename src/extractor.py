@@ -7,11 +7,18 @@ from typing import Any
 from openai import OpenAI
 from pydantic import ValidationError
 
-from prompts import (
-    EXTRACTION_SYSTEM_PROMPT,
-    build_extraction_user_prompt,
-)
-from schemas import EmailExtraction
+try:
+    from .prompts import (
+        EXTRACTION_SYSTEM_PROMPT,
+        build_extraction_user_prompt,
+    )
+    from .schemas import EmailExtraction
+except ImportError:
+    from prompts import (
+        EXTRACTION_SYSTEM_PROMPT,
+        build_extraction_user_prompt,
+    )
+    from schemas import EmailExtraction
 
 
 DEFAULT_MODEL = os.getenv("OPENAI_MODEL", "gpt-4.1-mini")

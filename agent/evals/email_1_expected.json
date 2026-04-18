@@ -1,0 +1,20 @@
+{
+  "school_name": null,
+  "email_subject": null,
+  "events": [
+    {
+      "title": "School farm trip",
+      "event_type": "trip",
+      "date": "10 May 2026",
+      "start_time": null,
+      "end_time": null,
+      "location": "AB Farm",
+      "child_specific": true,
+      "action_required": false,
+      "deadline": null,
+      "items_needed": null,
+      "cost": null,
+      "confidence": 0.9
+    }
+  ]
+}
