@@ -7,7 +7,7 @@ ParentMate AI extracts school events and parent actions from raw school emails.
 - Accepts an email subject and body.
 - Uses the OpenAI API to extract structured event data.
 - Validates the model output with Pydantic.
-- Stores extracted results in `src/events.json`.
+- Stores extracted results locally in `src/events.json`.
 - Exposes both a Streamlit UI and a FastAPI endpoint.
 
 ## Run The Streamlit App
@@ -36,3 +36,8 @@ Then send a `POST` request to `/ingest`:
 Set `OPENAI_API_KEY` before running extraction.
 
 Optionally set `OPENAI_MODEL`; otherwise the app uses `gpt-4.1-mini`.
+
+## Data Privacy
+
+Runtime extraction data is written to `src/events.json`, which is ignored by Git.
+Use `src/events.example.json` for harmless sample data.
